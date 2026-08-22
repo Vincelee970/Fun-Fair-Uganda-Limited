@@ -1,0 +1,823 @@
+index.html
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funfair Uganda Ltd - Your happiness is our mission</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- jsPDF & QRCode Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandRed: '#DC2626',
+                        brandBlue: '#1D4ED8',
+                        brandGreen: '#15803D',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom animated car cursor */
+        body { cursor: default; }
+        #custom-cursor {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.08s ease-out;
+        }
+        .interactive-hover:hover ~ #custom-cursor, button:hover ~ #custom-cursor, a:hover ~ #custom-cursor {
+            transform: translate(-50%, -50%) scale(1.4);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans relative">
+
+    <!-- Custom Animated Car Cursor -->
+    <div id="custom-cursor" class="text-brandRed text-xl drop-shadow-md">
+        <i class="fa-solid fa-car-side"></i>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                <div class="w-12 h-12 bg-brandRed rounded-full flex items-center justify-center text-white font-black text-xl border-2 border-brandBlue">
+                    FU
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-brandBlue leading-none">FUNFAIR UGANDA <span class="text-brandRed">LTD</span></h1>
+                    <p class="text-xs text-brandGreen font-semibold">Your happiness is our mission</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex space-x-6 font-medium text-gray-700">
+                <button onclick="switchTab('home')" class="hover:text-brandRed transition">Home</button>
+                <button onclick="switchTab('about')" class="hover:text-brandRed transition">About Us</button>
+                <button onclick="switchTab('fleet')" class="hover:text-brandRed transition">Fleet & Services</button>
+                <button onclick="switchTab('airport')" class="hover:text-brandRed transition">Airport Transfers</button>
+                <button onclick="switchTab('booking')" class="bg-brandRed text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Book Now</button>
+                <button onclick="switchTab('admin')" class="border border-brandBlue text-brandBlue px-3 py-2 rounded-lg hover:bg-blue-50 transition">Admin Portal</button>
+            </nav>
+            <div class="md:hidden">
+                <button onclick="toggleMobileMenu()" class="text-2xl text-gray-700"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b px-4 py-4 space-y-3">
+            <button onclick="switchTab('home')" class="block w-full text-left font-semibold">Home</button>
+            <button onclick="switchTab('about')" class="block w-full text-left font-semibold">About Us</button>
+            <button onclick="switchTab('fleet')" class="block w-full text-left font-semibold">Fleet & Services</button>
+            <button onclick="switchTab('airport')" class="block w-full text-left font-semibold">Airport Transfers</button>
+            <button onclick="switchTab('booking')" class="block w-full bg-brandRed text-white py-2 rounded text-center">Book Now</button>
+            <button onclick="switchTab('admin')" class="block w-full border border-brandBlue text-brandBlue py-2 rounded text-center">Admin Login</button>
+        </div>
+    </header>
+
+    <!-- MAIN VIEW CONTAINER -->
+    <main id="app-content">
+        
+        <!-- HOME SECTION -->
+        <section id="view-home" class="view-page">
+            <!-- Hero -->
+            <div class="relative bg-gradient-to-r from-brandBlue to-blue-900 text-white py-24 px-4 sm:px-6 lg:px-8 text-center">
+                <div class="max-w-4xl mx-auto space-y-6">
+                    <span class="bg-brandGreen text-white text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full">Reliable Transport Across Uganda</span>
+                    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight">Your Happiness is Our Mission</h1>
+                    <p class="text-lg sm:text-xl text-blue-100 max-w-2xl mx-auto">Seamless Entebbe airport transfers, luxury fleet rentals, and cargo logistics services nationwide.</p>
+                    <div class="flex flex-wrap justify-center gap-4 pt-4">
+                        <button onclick="switchTab('booking')" class="bg-brandRed hover:bg-red-700 text-white font-bold px-8 py-4 rounded-xl shadow-lg transition transform hover:-translate-y-0.5">Book Your Ride</button>
+                        <button onclick="switchTab('airport')" class="bg-white hover:bg-gray-100 text-brandBlue font-bold px-8 py-4 rounded-xl shadow-lg transition">Entebbe Transfers</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Highlights -->
+            <div class="max-w-7xl mx-auto py-16 px-4 grid md:grid-cols-3 gap-8">
+                <div class="p-6 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-red-100 text-brandRed rounded-xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-plane-arrival"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Airport Pickups</h3>
+                    <p class="text-gray-600">Fixed rate transfers between Entebbe International Airport (EBB) and Kampala or Jinja with meet & greet options.</p>
+                </div>
+                <div class="p-6 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-blue-100 text-brandBlue rounded-xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-calculator"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Transparent Pricing</h3>
+                    <p class="text-gray-600">Instant distance-based dynamic calculations (UGX/km) for custom trips without hidden charges.</p>
+                </div>
+                <div class="p-6 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-green-100 text-brandGreen rounded-xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Verified Drivers</h3>
+                    <p class="text-gray-600">24/7 punctual, professional, and safety-certified local drivers ready for long-distance journeys.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="view-about" class="view-page hidden py-16 px-4 max-w-5xl mx-auto">
+            <h2 class="text-3xl font-extrabold text-brandBlue mb-6 text-center">About Funfair Uganda Ltd</h2>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 space-y-6 text-gray-700 leading-relaxed">
+                <p class="text-lg">At <strong>Funfair Uganda Ltd</strong>, we live by a simple promise: <em>"Your happiness is our mission."</em> Established to revolutionize personal and corporate logistics across Uganda, we offer premier transportation solutions ranging from executive saloon cars to heavy cargo haulage.</p>
+                <div class="grid md:grid-cols-2 gap-6 my-6">
+                    <div class="bg-blue-50 p-4 rounded-xl border-l-4 border-brandBlue">
+                        <h4 class="font-bold text-brandBlue">24/7 Punctuality Guarantee</h4>
+                        <p class="text-sm">We track flight schedules in real time to guarantee your driver is at the terminal before you land.</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-xl border-l-4 border-brandGreen">
+                        <h4 class="font-bold text-brandGreen">Experienced Drivers</h4>
+                        <p class="text-sm">Every chauffeur undergoes defensive driving certification and extensive background verification.</p>
+                    </div>
+                </div>
+                <p>Whether navigating Kampala traffic, journeying to regional hubs like Gulu, Mbarara, and Fort Portal, or transporting cargo safely nationwide, our flexible payment and instant receipt platforms make travel hassle-free.</p>
+            </div>
+        </section>
+
+        <!-- FLEET SECTION -->
+        <section id="view-fleet" class="view-page hidden py-16 px-4 max-w-7xl mx-auto">
+            <h2 class="text-3xl font-extrabold text-brandBlue mb-4 text-center">Our Fleet Options</h2>
+            <p class="text-gray-600 text-center mb-12">Select from our well-maintained fleet designed for safety and comfort.</p>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Saloon Car -->
+                <div class="bg-white rounded-2xl shadow-sm border overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <div class="h-48 bg-gray-200 flex items-center justify-center text-gray-400 text-5xl">
+                            <i class="fa-solid fa-car"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">4-Seater Saloon Car</h3>
+                            <p class="text-gray-600 text-sm mb-4">Ideal for individual travel, executive city commutes, and small family airport trips.</p>
+                            <span class="inline-block bg-blue-100 text-brandBlue text-xs font-bold px-3 py-1 rounded-full">UGX 1,600 / km base</span>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="selectVehicleAndBook('saloon')" class="w-full bg-brandBlue hover:bg-blue-800 text-white font-bold py-2 rounded-lg transition">Book This Vehicle</button>
+                    </div>
+                </div>
+
+                <!-- Super Custom -->
+                <div class="bg-white rounded-2xl shadow-sm border border-brandRed overflow-hidden flex flex-col justify-between relative">
+                    <span class="absolute top-3 right-3 bg-brandRed text-white text-xs font-bold px-3 py-1 rounded-full">Most Popular</span>
+                    <div>
+                        <div class="h-48 bg-gray-200 flex items-center justify-center text-gray-400 text-5xl">
+                            <i class="fa-solid fa-van-shuttle"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">8-Seater Super Custom / Drone</h3>
+                            <p class="text-gray-600 text-sm mb-4">Spacious seating with climate control, tailored for group tours and safari runs.</p>
+                            <span class="inline-block bg-red-100 text-brandRed text-xs font-bold px-3 py-1 rounded-full">UGX 2,200 / km base</span>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="selectVehicleAndBook('drone')" class="w-full bg-brandRed hover:bg-red-700 text-white font-bold py-2 rounded-lg transition">Book This Vehicle</button>
+                    </div>
+                </div>
+
+                <!-- Cargo Truck -->
+                <div class="bg-white rounded-2xl shadow-sm border overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <div class="h-48 bg-gray-200 flex items-center justify-center text-gray-400 text-5xl">
+                            <i class="fa-solid fa-truck-pickup"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Cargo Pickup / Truck</h3>
+                            <p class="text-gray-600 text-sm mb-4">Heavy-duty transport for commercial goods, household moves, and freight.</p>
+                            <span class="inline-block bg-green-100 text-brandGreen text-xs font-bold px-3 py-1 rounded-full">UGX 2,900 / km base</span>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="selectVehicleAndBook('cargo')" class="w-full bg-brandGreen hover:bg-green-800 text-white font-bold py-2 rounded-lg transition">Book This Vehicle</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AIRPORT TRANSFERS MODULE -->
+        <section id="view-airport" class="view-page hidden py-16 px-4 max-w-4xl mx-auto">
+            <div class="bg-gradient-to-br from-brandBlue to-blue-900 text-white p-8 rounded-2xl shadow-lg">
+                <h2 class="text-3xl font-extrabold mb-2"><i class="fa-solid fa-plane-arrival mr-2"></i> Entebbe Airport (EBB) Dedicated Portal</h2>
+                <p class="text-blue-100 mb-6">Fixed-rate guarantees with real-time driver scheduling and flight tracking.</p>
+                <form id="airport-form" onsubmit="handleAirportSubmit(event)" class="space-y-4 text-gray-800">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-white text-sm font-bold mb-1">Transfer Type</label>
+                            <select id="ap-type" class="w-full p-3 rounded-lg bg-white" required>
+                                <option value="pickup">Airport Pickup (EBB to City)</option>
+                                <option value="dropoff">Airport Drop-Off (City to EBB)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-white text-sm font-bold mb-1">Flight Number</label>
+                            <input type="text" id="ap-flight" placeholder="e.g. WB 434 / EK 729" class="w-full p-3 rounded-lg bg-white" required>
+                        </div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-white text-sm font-bold mb-1">Scheduled Arrival / Departure Time</label>
+                            <input type="datetime-local" id="ap-time" class="w-full p-3 rounded-lg bg-white" required>
+                        </div>
+                        <div>
+                            <label class="block text-white text-sm font-bold mb-1">Luggage Count</label>
+                            <input type="number" id="ap-luggage" min="1" max="20" placeholder="Number of bags" class="w-full p-3 rounded-lg bg-white" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-white text-sm font-bold mb-1">Driver Meet & Greet Preference</label>
+                        <select id="ap-greet" class="w-full p-3 rounded-lg bg-white">
+                            <option value="standard">Standard Terminal Arrival Meet</option>
+                            <option value="nameboard">Name Board Signage (+UGX 10,000)</option>
+                            <option value="vip">VIP Lounge Express Escort</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="w-full bg-brandRed hover:bg-red-700 text-white font-bold py-3 rounded-lg shadow-md transition">Proceed to Airport Booking</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- BOOKING & DUAL PRICING SECTION -->
+        <section id="view-booking" class="view-page hidden py-16 px-4 max-w-4xl mx-auto">
+            <h2 class="text-3xl font-extrabold text-brandBlue mb-6 text-center">Reservation & Instant Calculation</h2>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                <form id="booking-form" onsubmit="processBooking(event)" class="space-y-6">
+                    
+                    <!-- Route Selection Mode -->
+                    <div class="bg-gray-50 p-4 rounded-xl flex justify-around">
+                        <label class="inline-flex items-center font-bold text-gray-700">
+                            <input type="radio" name="pricing-mode" value="fixed" checked onclick="togglePricingMode('fixed')" class="text-brandBlue focus:ring-brandBlue">
+                            <span class="ml-2">Fixed Popular Routes</span>
+                        </label>
+                        <label class="inline-flex items-center font-bold text-gray-700">
+                            <input type="radio" name="pricing-mode" value="dynamic" onclick="togglePricingMode('dynamic')" class="text-brandBlue focus:ring-brandBlue">
+                            <span class="ml-2">Custom Distance Calculation</span>
+                        </label>
+                    </div>
+
+                    <!-- Client Details -->
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-bold mb-1">Full Name</label>
+                            <input type="text" id="cust-name" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-brandBlue outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold mb-1">Contact Phone Number</label>
+                            <input type="tel" id="cust-phone" placeholder="+256700000000" required class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-brandBlue outline-none">
+                        </div>
+                    </div>
+
+                    <!-- Vehicle Type -->
+                    <div>
+                        <label class="block text-sm font-bold mb-1">Vehicle Selection</label>
+                        <select id="book-vehicle" onchange="calculatePrice()" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-brandBlue outline-none">
+                            <option value="saloon">4-Seater Saloon Car</option>
+                            <option value="drone">8-Seater Super Custom / Drone</option>
+                            <option value="cargo">Cargo Pickup / Truck</option>
+                        </select>
+                    </div>
+
+                    <!-- Location Pickers -->
+                    <div id="fixed-route-container" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-bold mb-1">Select Fixed Package</label>
+                            <select id="fixed-route-select" onchange="calculatePrice()" class="w-full p-3 border rounded-lg">
+                                <option value="ebb-kpk">Entebbe Airport <-> Kampala City (Fixed Rate)</option>
+                                <option value="ebb-jnj">Entebbe Airport <-> Jinja City (Fixed Rate)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="dynamic-route-container" class="hidden space-y-4">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-bold mb-1">Pickup Location</label>
+                                <select id="dyn-pickup" onchange="calculatePrice()" class="w-full p-3 border rounded-lg">
+                                    <option value="Kampala">Kampala</option>
+                                    <option value="Entebbe">Entebbe</option>
+                                    <option value="Jinja">Jinja</option>
+                                    <option value="Mbarara">Mbarara</option>
+                                    <option value="Gulu">Gulu</option>
+                                    <option value="Fort Portal">Fort Portal</option>
+                                    <option value="Mbale">Mbale</option>
+                                    <option value="Masaka">Masaka</option>
+                                    <option value="Mukono">Mukono</option>
+                                    <option value="Arua">Arua</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold mb-1">Destination Location</label>
+                                <select id="dyn-dest" onchange="calculatePrice()" class="w-full p-3 border rounded-lg">
+                                    <option value="Jinja">Jinja</option>
+                                    <option value="Kampala">Kampala</option>
+                                    <option value="Entebbe">Entebbe</option>
+                                    <option value="Mbarara">Mbarara</option>
+                                    <option value="Gulu">Gulu</option>
+                                    <option value="Fort Portal">Fort Portal</option>
+                                    <option value="Mbale">Mbale</option>
+                                    <option value="Masaka">Masaka</option>
+                                    <option value="Mukono">Mukono</option>
+                                    <option value="Arua">Arua</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Date and Time -->
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-bold mb-1">Pickup Date</label>
+                            <input type="date" id="book-date" required class="w-full p-3 border rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold mb-1">Scheduled Arrival Time at Pickup</label>
+                            <input type="time" id="book-time" required class="w-full p-3 border rounded-lg">
+                        </div>
+                    </div>
+
+                    <!-- Live Price Calculation Box -->
+                    <div class="bg-blue-50 border border-brandBlue p-6 rounded-xl flex justify-between items-center">
+                        <div>
+                            <p class="text-sm font-semibold text-brandBlue">Estimated Total Fare</p>
+                            <p id="distance-display" class="text-xs text-gray-500">Route Type: Fixed Rate Package</p>
+                        </div>
+                        <div class="text-right">
+                            <span id="price-display" class="text-3xl font-black text-brandBlue">UGX 120,000</span>
+                        </div>
+                    </div>
+
+                    <!-- Payment Gateways -->
+                    <div class="space-y-3">
+                        <label class="block text-sm font-bold mb-1">Payment Method</label>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <label class="border p-4 rounded-xl flex items-center space-x-3 cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="pay-method" value="momo" checked onclick="togglePaymentFields('momo')">
+                                <span class="text-sm font-bold text-yellow-600">MTN MoMo</span>
+                            </label>
+                            <label class="border p-4 rounded-xl flex items-center space-x-3 cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="pay-method" value="airtel" onclick="togglePaymentFields('airtel')">
+                                <span class="text-sm font-bold text-red-600">Airtel Money</span>
+                            </label>
+                            <label class="border p-4 rounded-xl flex items-center space-x-3 cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="pay-method" value="bank" onclick="togglePaymentFields('bank')">
+                                <span class="text-sm font-bold text-blue-800">Bank Transfer</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Payment Details Dynamic Panel -->
+                    <div id="payment-instructions" class="p-4 bg-gray-100 rounded-lg text-sm space-y-2">
+                        <p class="font-bold text-gray-800">MTN Merchant Code: <span class="text-brandRed font-mono">554433</span> (Funfair Uganda Ltd)</p>
+                        <p class="text-xs text-gray-500">Enter your mobile phone number on prompt after submission.</p>
+                    </div>
+
+                    <button type="submit" class="w-full bg-brandGreen hover:bg-green-800 text-white font-extrabold py-4 rounded-xl shadow-lg transition">Complete Booking & Download PDF Receipt</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ADMIN DASHBOARD -->
+        <section id="view-admin" class="view-page hidden py-16 px-4 max-w-7xl mx-auto">
+            <!-- Login State -->
+            <div id="admin-login-box" class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-md border">
+                <h3 class="text-2xl font-bold mb-4 text-center text-brandBlue">Admin & Driver Portal</h3>
+                <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-bold mb-1">Access Passcode</label>
+                        <input type="password" id="admin-pass" placeholder="Enter admin pass (admin123)" class="w-full p-3 border rounded-lg">
+                    </div>
+                    <button type="submit" class="w-full bg-brandBlue text-white font-bold py-3 rounded-lg">Login</button>
+                </form>
+            </div>
+
+            <!-- Dashboard Content State -->
+            <div id="admin-dashboard" class="hidden space-y-8">
+                <div class="flex justify-between items-center border-b pb-4">
+                    <h2 class="text-2xl font-bold text-brandBlue">Fleet & Dispatch Control Center</h2>
+                    <button onclick="logoutAdmin()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-semibold text-sm">Logout</button>
+                </div>
+
+                <!-- Vehicle Availability Tracker -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Vehicle Fleet Availability Status</h3>
+                    <div class="grid md:grid-cols-3 gap-4" id="fleet-status-grid">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Booking Management Table -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Real-Time Bookings & Payment Approvals</h3>
+                    <div class="bg-white rounded-xl border shadow-sm overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-gray-50 border-b">
+                                <tr>
+                                    <th class="p-3">Ref ID</th>
+                                    <th class="p-3">Client Details</th>
+                                    <th class="p-3">Vehicle</th>
+                                    <th class="p-3">Route</th>
+                                    <th class="p-3">Schedule</th>
+                                    <th class="p-3">Total Fare</th>
+                                    <th class="p-3">Payment</th>
+                                    <th class="p-3">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-bookings-table">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Hidden Container for QR Code rendering -->
+    <div id="qrcode" class="hidden"></div>
+
+    <!-- Contact & Footer Section -->
+    <footer class="bg-gray-900 text-white mt-20 pt-12 pb-8 border-t-4 border-brandRed">
+        <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-8 mb-8">
+            <div>
+                <h3 class="text-xl font-bold text-brandRed mb-3">Funfair Uganda Ltd</h3>
+                <p class="text-gray-400 text-sm mb-4">"Your happiness is our mission" - Premium passenger transfers, airport pick-up services, and cargo solutions throughout Uganda.</p>
+                <p class="text-xs text-gray-500">Email: <a href="mailto:funfairugandaltd78@yahoo.com" class="underline hover:text-white">funfairugandaltd78@yahoo.com</a></p>
+            </div>
+            <div>
+                <h4 class="font-bold text-gray-200 mb-3"><i class="fa-brands fa-whatsapp text-brandGreen mr-2"></i> WhatsApp Booking Lines</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="https://wa.me/256752485485" target="_blank" class="hover:text-white">+256 752 485 485</a></li>
+                    <li><a href="https://wa.me/256765251468" target="_blank" class="hover:text-white">+256 765 251 468</a></li>
+                    <li><a href="https://wa.me/256332276241" target="_blank" class="hover:text-white">+256 332 276 241</a></li>
+                    <li><a href="https://wa.me/256778950362" target="_blank" class="hover:text-white">+256 778 950 362</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-gray-200 mb-3"><i class="fa-solid fa-phone text-brandBlue mr-2"></i> Direct Call Hotlines</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="tel:+256752485485" class="hover:text-white">+256 752 485 485</a></li>
+                    <li><a href="tel:+256772485485" class="hover:text-white">+256 772 485 485</a></li>
+                    <li><a href="tel:+256332276241" class="hover:text-white">+256 332 276 241</a></li>
+                    <li><a href="tel:+256705231929" class="hover:text-white">+256 705 231 929</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 border-t border-gray-800 pt-6 text-center text-xs text-gray-500">
+            &copy; 2026 Funfair Uganda Ltd. All rights reserved. Professional Fleet & Logistics Systems.
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Quick-Contact Widget -->
+    <a href="https://wa.me/256752485485" target="_blank" class="fixed bottom-6 right-6 bg-brandGreen text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl shadow-2xl hover:scale-110 transition z-50" title="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- APP JAVASCRIPT LOGIC -->
+    <script>
+        // Global State & Data Store
+        let state = {
+            activeTab: 'home',
+            pricingMode: 'fixed',
+            fleet: [
+                { id: 'v1', name: '4-Seater Saloon Car', type: 'saloon', status: 'Available', rate: 1600 },
+                { id: 'v2', name: '8-Seater Super Custom / Drone', type: 'drone', status: 'Available', rate: 2200 },
+                { id: 'v3', name: 'Cargo Pickup / Truck', type: 'cargo', status: 'In Transit', rate: 2900 }
+            ],
+            bookings: [
+                {
+                    ref: 'FU-88219',
+                    name: 'Sarah Namubiru',
+                    phone: '+256772112233',
+                    vehicle: '8-Seater Super Custom / Drone',
+                    route: 'Entebbe Airport -> Kampala',
+                    date: '2026-08-25',
+                    time: '14:30',
+                    amount: 120000,
+                    payment: 'MTN MoMo',
+                    status: 'Approved'
+                }
+            ]
+        };
+
+        // Distance Matrix Mock Table for Ugandan Towns (in KM)
+        const distanceMatrix = {
+            'Kampala-Jinja': 80, 'Kampala-Entebbe': 40, 'Kampala-Mbarara': 270, 'Kampala-Gulu': 335,
+            'Kampala-Fort Portal': 295, 'Kampala-Mbale': 225, 'Kampala-Masaka': 130, 'Kampala-Mukono': 25,
+            'Kampala-Arua': 480, 'Entebbe-Jinja': 120, 'Entebbe-Mbarara': 300
+        };
+
+        // Custom Animated Cursor Setup
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.getElementById('custom-cursor');
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Tab Navigation Controller
+        function switchTab(tabId) {
+            state.activeTab = tabId;
+            document.querySelectorAll('.view-page').forEach(el => el.classList.add('hidden'));
+            const activeEl = document.getElementById(`view-${tabId}`);
+            if (activeEl) activeEl.classList.remove('hidden');
+            document.getElementById('mobile-menu').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (tabId === 'booking') calculatePrice();
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        function selectVehicleAndBook(vehicleType) {
+            switchTab('booking');
+            document.getElementById('book-vehicle').value = vehicleType;
+            calculatePrice();
+        }
+
+        // Airport Specific Shortcut
+        function handleAirportSubmit(e) {
+            e.preventDefault();
+            switchTab('booking');
+            document.getElementById('pricing-mode-fixed').checked = true;
+            togglePricingMode('fixed');
+            document.getElementById('fixed-route-select').value = 'ebb-kpk';
+            calculatePrice();
+        }
+
+        // Pricing System Logic
+        function togglePricingMode(mode) {
+            state.pricingMode = mode;
+            if (mode === 'fixed') {
+                document.getElementById('fixed-route-container').classList.remove('hidden');
+                document.getElementById('dynamic-route-container').classList.add('hidden');
+            } else {
+                document.getElementById('fixed-route-container').classList.add('hidden');
+                document.getElementById('dynamic-route-container').classList.remove('hidden');
+            }
+            calculatePrice();
+        }
+
+        function getDistance(p1, p2) {
+            if (p1 === p2) return 5;
+            const key1 = `${p1}-${p2}`;
+            const key2 = `${p2}-${p1}`;
+            return distanceMatrix[key1] || distanceMatrix[key2] || 150; // Fallback estimate
+        }
+
+        function calculatePrice() {
+            const vehicle = document.getElementById('book-vehicle').value;
+            let amount = 0;
+            let distText = "";
+
+            if (state.pricingMode === 'fixed') {
+                const route = document.getElementById('fixed-route-select').value;
+                if (route === 'ebb-kpk') {
+                    amount = vehicle === 'saloon' ? 120000 : (vehicle === 'drone' ? 170000 : 220000);
+                } else {
+                    amount = vehicle === 'saloon' ? 250000 : (vehicle === 'drone' ? 320000 : 400000);
+                }
+                distText = "Package Rate: Fixed Airport Express";
+            } else {
+                const origin = document.getElementById('dyn-pickup').value;
+                const dest = document.getElementById('dyn-dest').value;
+                const distance = getDistance(origin, dest);
+                
+                let baseRate = 30000;
+                let perKmRate = 1600;
+                if (vehicle === 'drone') perKmRate = 2200;
+                if (vehicle === 'cargo') perKmRate = 2900;
+
+                amount = baseRate + (distance * perKmRate);
+                distText = `Estimated Distance: ${distance} km @ UGX ${perKmRate}/km`;
+            }
+
+            document.getElementById('price-display').innerText = `UGX ${amount.toLocaleString()}`;
+            document.getElementById('distance-display').innerText = distText;
+            return amount;
+        }
+
+        // Dynamic Payment Fields
+        function togglePaymentFields(method) {
+            const container = document.getElementById('payment-instructions');
+            if (method === 'momo') {
+                container.innerHTML = `<p class="font-bold text-gray-800">MTN Merchant Code: <span class="text-brandRed font-mono">554433</span> (Funfair Uganda Ltd)</p><p class="text-xs text-gray-500">Prompt will be pushed to your registered mobile phone.</p>`;
+            } else if (method === 'airtel') {
+                container.innerHTML = `<p class="font-bold text-gray-800">Airtel Pay Merchant ID: <span class="text-brandRed font-mono">112244</span> (Funfair Uganda Ltd)</p><p class="text-xs text-gray-500">Confirm popup on handset.</p>`;
+            } else {
+                container.innerHTML = `<p class="font-bold text-gray-800">Bank Details: Stanbic Bank Uganda</p><p class="text-xs text-gray-700">Account: 903001234567 | Name: Funfair Uganda Ltd</p><input type="file" class="mt-2 text-xs">`;
+            }
+        }
+
+        // PDF Receipt Generator Using jsPDF & QRCode
+        function generatePDFReceipt(bookingData) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Header Banner
+            doc.setFillColor(29, 78, 216); // Royal Blue
+            doc.rect(0, 0, 210, 35, 'F');
+            
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(20);
+            doc.setFont("helvetica", "bold");
+            doc.text("FUNFAIR UGANDA LTD", 15, 18);
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "normal");
+            doc.text("Your happiness is our mission", 15, 26);
+            
+            doc.setFontSize(14);
+            doc.text("OFFICIAL BOOKING RECEIPT", 130, 20);
+
+            // Receipt Information Body
+            doc.setTextColor(40, 40, 40);
+            doc.setFontSize(10);
+            
+            let y = 45;
+            doc.setFont("helvetica", "bold");
+            doc.text(`Booking Reference ID: ${bookingData.ref}`, 15, y);
+            doc.text(`Date Issued: ${new Date().toLocaleDateString()}`, 130, y);
+
+            y += 12;
+            doc.setLineWidth(0.5);
+            doc.line(15, y, 195, y);
+
+            y += 10;
+            doc.setFont("helvetica", "bold");
+            doc.text("CLIENT INFORMATION", 15, y);
+            doc.setFont("helvetica", "normal");
+            doc.text(`Name: ${bookingData.name}`, 15, y + 6);
+            doc.text(`Contact: ${bookingData.phone}`, 15, y + 12);
+
+            doc.setFont("helvetica", "bold");
+            doc.text("TRIP & FLEET DETAILS", 110, y);
+            doc.setFont("helvetica", "normal");
+            doc.text(`Vehicle: ${bookingData.vehicle}`, 110, y + 6);
+            doc.text(`Route: ${bookingData.route}`, 110, y + 12);
+            doc.text(`Schedule: ${bookingData.date} at ${bookingData.time}`, 110, y + 18);
+
+            y += 30;
+            doc.line(15, y, 195, y);
+
+            y += 12;
+            doc.setFont("helvetica", "bold");
+            doc.text("Payment Method:", 15, y);
+            doc.text(bookingData.payment, 60, y);
+
+            y += 8;
+            doc.setFontSize(12);
+            doc.text("Total Paid (UGX):", 15, y);
+            doc.setTextColor(220, 38, 38); // Brand Red
+            doc.text(`UGX ${bookingData.amount.toLocaleString()}`, 60, y);
+
+            // QR Code Embedding
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = '';
+            new QRCode(qrContainer, {
+                text: `FUNFAIR-VERIFY:${bookingData.ref}:${bookingData.name}:${bookingData.amount}`,
+                width: 80,
+                height: 80
+            });
+
+            setTimeout(() => {
+                const qrCanvas = qrContainer.querySelector('canvas');
+                if (qrCanvas) {
+                    const qrDataUrl = qrCanvas.toDataURL("image/png");
+                    doc.addImage(qrDataUrl, 'PNG', 140, y - 10, 40, 40);
+                }
+                
+                // Footer text
+                doc.setTextColor(120, 120, 120);
+                doc.setFontSize(8);
+                doc.text("Thank you for traveling with Funfair Uganda Ltd. Present this receipt to your driver upon pickup.", 15, 140);
+                
+                // Save File
+                doc.save(`Receipt-${bookingData.ref}.pdf`);
+            }, 300);
+        }
+
+        // Process Form Submission
+        function processBooking(e) {
+            e.preventDefault();
+            const name = document.getElementById('cust-name').value;
+            const phone = document.getElementById('cust-phone').value;
+            const vehicleSelect = document.getElementById('book-vehicle');
+            const vehicleName = vehicleSelect.options[vehicleSelect.selectedIndex].text;
+            const date = document.getElementById('book-date').value;
+            const time = document.getElementById('book-time').value;
+            const payMethod = document.querySelector('input[name="pay-method"]:checked').value.toUpperCase();
+            
+            let route = "";
+            if (state.pricingMode === 'fixed') {
+                const r = document.getElementById('fixed-route-select').value;
+                route = r === 'ebb-kpk' ? 'Entebbe Airport <-> Kampala' : 'Entebbe Airport <-> Jinja';
+            } else {
+                route = `${document.getElementById('dyn-pickup').value} -> ${document.getElementById('dyn-dest').value}`;
+            }
+
+            const amount = calculatePrice();
+            const refID = 'FU-' + Math.floor(10000 + Math.random() * 90000);
+
+            const bookingData = {
+                ref: refID,
+                name: name,
+                phone: phone,
+                vehicle: vehicleName,
+                route: route,
+                date: date,
+                time: time,
+                amount: amount,
+                payment: payMethod,
+                status: 'Pending Review'
+            };
+
+            state.bookings.push(bookingData);
+            generatePDFReceipt(bookingData);
+            alert(`Booking ${refID} Successful! Your PDF official receipt is downloading.`);
+            renderAdminView();
+            switchTab('home');
+        }
+
+        // Admin Auth & Functions
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const pass = document.getElementById('admin-pass').value;
+            if (pass === 'admin123') {
+                document.getElementById('admin-login-box').classList.add('hidden');
+                document.getElementById('admin-dashboard').classList.remove('hidden');
+                renderAdminView();
+            } else {
+                alert('Invalid Admin Passcode');
+            }
+        }
+
+        function logoutAdmin() {
+            document.getElementById('admin-login-box').classList.remove('hidden');
+            document.getElementById('admin-dashboard').classList.add('hidden');
+        }
+
+        function renderAdminView() {
+            // Render Fleet Tracker
+            const fleetGrid = document.getElementById('fleet-status-grid');
+            fleetGrid.innerHTML = '';
+            state.fleet.forEach(v => {
+                let badgeColor = v.status === 'Available' ? 'bg-green-100 text-green-800' : (v.status === 'In Transit' ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800');
+                fleetGrid.innerHTML += `
+                    <div class="bg-white p-4 rounded-xl border">
+                        <h4 class="font-bold">${v.name}</h4>
+                        <span class="inline-block text-xs font-bold px-2 py-1 rounded-full ${badgeColor} my-2">${v.status}</span>
+                        <div class="text-xs space-x-1">
+                            <button onclick="updateFleetStatus('${v.id}', 'Available')" class="bg-gray-100 p-1 rounded">Available</button>
+                            <button onclick="updateFleetStatus('${v.id}', 'In Transit')" class="bg-gray-100 p-1 rounded">Transit</button>
+                            <button onclick="updateFleetStatus('${v.id}', 'Under Maintenance')" class="bg-gray-100 p-1 rounded">Maintenance</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Render Bookings Table
+            const tableBody = document.getElementById('admin-bookings-table');
+            tableBody.innerHTML = '';
+            state.bookings.forEach((b, idx) => {
+                tableBody.innerHTML += `
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="p-3 font-bold text-brandBlue">${b.ref}</td>
+                        <td class="p-3">${b.name}<br><span class="text-xs text-gray-500">${b.phone}</span></td>
+                        <td class="p-3 text-xs">${b.vehicle}</td>
+                        <td class="p-3 text-xs">${b.route}</td>
+                        <td class="p-3 text-xs">${b.date}<br>${b.time}</td>
+                        <td class="p-3 font-bold">UGX ${b.amount.toLocaleString()}</td>
+                        <td class="p-3 text-xs">${b.payment}</td>
+                        <td class="p-3">
+                            <span class="px-2 py-1 text-xs font-bold rounded ${b.status === 'Approved' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}">${b.status}</span>
+                            ${b.status !== 'Approved' ? `<button onclick="approvePayment(${idx})" class="ml-2 text-xs bg-brandGreen text-white px-2 py-1 rounded">Approve</button>` : ''}
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function updateFleetStatus(id, newStatus) {
+            const v = state.fleet.find(item => item.id === id);
+            if (v) v.status = newStatus;
+            renderAdminView();
+        }
+
+        function approvePayment(index) {
+            state.bookings[index].status = 'Approved';
+            renderAdminView();
+        }
+
+        // Initialize default dates
+        document.getElementById('book-date').valueAsDate = new Date();
+    </script>
+</body>
+</html>
